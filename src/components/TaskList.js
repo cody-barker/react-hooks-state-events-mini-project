@@ -1,11 +1,26 @@
-import React from "react";
+import { waitForDomChange } from "@testing-library/react";
+import React, {useState} from "react";
+import Task from './Task'
 
-function TaskList() {
+function TaskList({tasks, list, setList, filteredList}) {
+
+  function handleDelete (text) {
+    const newTaskList = list.filter(task =>  task.text !== text)
+    setList(newTaskList)
+  }
+
+  const allTasks = filteredList.map(task => {
+    return <Task key={task.text} text={task.text} category={task.category} handleDelete={handleDelete}/>
+  })
+
+  console.log(allTasks)
+
   return (
     <div className="tasks">
-      {/* display a list of tasks using Task component */}
+      {allTasks}
     </div>
   );
 }
 
 export default TaskList;
+
